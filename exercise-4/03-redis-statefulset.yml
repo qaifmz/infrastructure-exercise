@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: karma-redis
+  name: karma-redis
+  namespace: exercise-4
+spec:
+  podManagementPolicy: OrderedReady
+  replicas: 1
+  selector:
+    matchLabels:
+      app: karma-redis
+  serviceName: karma-redis
+  template:
+    metadata:
+      labels:
+        app: karma-redis
+    spec:
+      containers:
+      - image: redis:3.2
+        imagePullPolicy: IfNotPresent
+        name: redis
+        ports:
+        - containerPort: 6379
+          name: redis-server
+          protocol: TCP
+        resources:
+          requests:
+            memory: 128Mi
+        volumeMounts:
+        - mountPath: /data
+          name: karma-redis-storage
+  updateStrategy:
+    type: OnDelete
+  volumeClaimTemplates:
+  - metadata:
+      annotations:
+        volume.alpha.kubernetes.io/storage-class: default
+      name: karma-redis-storage
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 10Gi

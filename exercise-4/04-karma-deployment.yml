@@ -1,0 +1,41 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: karma-app
+  name: karma-app
+  namespace: exercise-4
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: karma-app
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: karma-app
+    spec:
+      containers:
+      - name: app
+        image: 235156212133.dkr.ecr.us-east-1.amazonaws.com/karma:latest
+        resources:
+          requests:
+            cpu: 10m
+            memory: 64Mi
+          # limits:
+          #   cpu: 10m
+          #   memory: 64Mi
+        env:
+        - name: REDIS_HOST
+          value: localhost:6379
+        livenessProbe:
+          httpGet:
+            path: /api/healthz
+            port: 8080
+          initialDelaySeconds: 20
+          timeoutSeconds: 20
+          periodSeconds: 20

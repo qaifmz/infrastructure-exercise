@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: exercise-3
+  name: exercise-3-deployment
+  namespace: exercise-3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: exercise-3
+  template:
+    metadata:
+        labels:
+          app: exercise-3
+    spec:
+      containers:
+      - image: 235156212133.dkr.ecr.us-east-1.amazonaws.com/httpd-jake:0.0.1
+        name: httpd-jake
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: 50Mi
+          limits:
+            memory: 50Mi

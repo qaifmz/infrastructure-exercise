@@ -1,0 +1,15 @@
+.app {
+  text-align: center;
+}
+
+.app h1 {
+  font-size: 15vw;
+}
+
+.app button {
+  border: none;
+  background: black;
+  border-radius: 3px;
+  margin: 0 1rem;
+  padding: 5vw;
+}

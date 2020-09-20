@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: exercise-1
+  name: exercise-1-deployment
+  namespace: exercise-1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: exercise-1
+  template:
+    metadata:
+        labels:
+          app: exercise-1
+    spec:
+      containers:
+      - image: httpd
+        name: httpd
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: 50Mi
+          limits:
+            memory: 50Mi
